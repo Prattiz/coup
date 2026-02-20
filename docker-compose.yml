@@ -1,7 +1,6 @@
 version: "3.9"
 
 services:
-
   mongo:
     image: mongo:7
     container_name: coup-mongo
@@ -20,6 +19,21 @@ services:
     restart: always
     ports:
       - "6379:6379"
+
+  app:
+    build: .
+    container_name: coup-app
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+    ports:
+      - "8080:8080"
+    environment:
+      MONGO_URI: mongodb://root:root@mongo:27017
+      DATABASE_NAME: coup
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
 volumes:
   mongo_data:
