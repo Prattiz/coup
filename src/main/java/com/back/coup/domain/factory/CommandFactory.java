@@ -21,7 +21,7 @@ public class CommandFactory {
 
     public EventResponse execute(WebsocketMessageDto message) {
 
-        switch (message.getCommand()) {
+        switch (message.command) {
 
             // case "ACTION":
             //     return action.execute(message);
@@ -40,7 +40,7 @@ public class CommandFactory {
 
             default:
                 throw new RuntimeException(
-                    "Command not found: " + message.getCommand()
+                    "Command not found: " + message.command
                 );
         }
     }

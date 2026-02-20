@@ -9,6 +9,6 @@ import com.back.coup.domain.dtos.WebsocketMessageDto;
 public class GameStart {
 
     public String execute(WebsocketMessageDto message) {
-        return "ON_GAME_START" + message.getPayload() ;
+        return "ON_GAME_START" + message.payload;
     }
 }
