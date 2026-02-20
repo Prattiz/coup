@@ -3,7 +3,7 @@ package com.back.coup.domain.commands;
 import org.springframework.stereotype.Component;
 
 import com.back.coup.domain.dtos.EventResponse;
-import com.back.coup.domain.dtos.JoinLobby;
+import com.back.coup.domain.dtos.JoinRoomDTO;
 import com.back.coup.domain.dtos.WebsocketMessageDto;
 import com.back.coup.services.JoinRoomService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,16 +19,19 @@ public class JoinRoom {
     private final JoinRoomService joinRoomService;
 
     public EventResponse execute(WebsocketMessageDto message) {
-        JsonNode payload = message.getPayload();
+        JsonNode payload = message.payload;
 
-        JoinLobby payloadPlayer = mapper.convertValue(
+        JoinRoomDTO payloadPlayer = mapper.convertValue(
                 payload.get("player"),
-                JoinLobby.class);
+                JoinRoomDTO.class);
 
         try {
+
             joinRoomService.execute(
-                    payload.get("roomId").asText(),
-                    payloadPlayer);
+                payload.get("roomId").asText(),
+                payloadPlayer
+            );
+
             return new EventResponse("ON_JOIN_ROOM", payload);
         } catch (Exception e) {
             System.out.println("ERRO: " + e);

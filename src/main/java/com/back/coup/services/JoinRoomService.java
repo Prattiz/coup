@@ -6,7 +6,7 @@ import java.util.HashSet;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.back.coup.domain.dtos.JoinLobby;
+import com.back.coup.domain.dtos.JoinRoomDTO;
 import com.back.coup.domain.models.redis.Lobby;
 import com.back.coup.domain.models.redis.PlayerSession;
 
@@ -20,7 +20,7 @@ public class JoinRoomService {
     private final RedisTemplate<String, Object> redisTemplate;
 
 
-    private void addPlayerSessionIntoRoom(Lobby room, JoinLobby player){
+    private void addPlayerSessionIntoRoom(Lobby room, JoinRoomDTO player){
 
         int nextTurnPosition = room.getPlayers().size() + 1;
         
@@ -38,6 +38,10 @@ public class JoinRoomService {
             .liedLastRound(false)
             .playedLastRound(false)
             .build();
+        
+        if (room.getPlayers().contains(newSession)){ 
+            throw new RuntimeException("Player already in room!");
+        }
 
         room.getPlayers().add(newSession);
 
@@ -46,7 +50,7 @@ public class JoinRoomService {
     }
 
 
-    public void execute(String roomId, JoinLobby player) {
+    public void execute(String roomId, JoinRoomDTO player) {
 
         try {
             String key = "room:" + roomId;

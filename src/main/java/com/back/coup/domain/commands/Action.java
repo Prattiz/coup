@@ -9,6 +9,6 @@ public class Action {
 
  
     public String execute(WebsocketMessageDto message) {
-        return "ON_ACTION" + message.getPayload();
+        return "ON_ACTION" + message.payload;
     }
 }

@@ -9,6 +9,6 @@ import com.back.coup.domain.dtos.WebsocketMessageDto;
 public class Doubt {
 
     public String execute(WebsocketMessageDto message) {
-        return "ON_DOUBT" + message.getPayload() ;
+        return "ON_DOUBT" + message.payload;
     }
 }

@@ -9,6 +9,6 @@ import com.back.coup.domain.dtos.WebsocketMessageDto;
 public class LeaveRoom{
 
     public String execute(WebsocketMessageDto message) {
-        return "ON_LEAVE_ROOM" + message.getPayload();
+        return "ON_LEAVE_ROOM" + message.payload;
     }
 }
